@@ -142,11 +142,11 @@ namespace API.Controllers
                 var curso = _cursoRepositorio.RecuperarPorNome(dto.Curso2);
 
                 if (segundaInscricao == null)
-                {          
+                {
                     aluno.Inscrever(curso, Enum.Parse<Grade>(dto.Curso2Grade));  // Inscreve o aluno.
                 }
                 else
-                {          
+                {
                     segundaInscricao.Atualizar(curso, Enum.Parse<Grade>(dto.Curso2Grade));  // Transfere o aluno.
                 }
             }
@@ -166,5 +166,31 @@ namespace API.Controllers
 
             return novoCursoNome != inscricao.Curso.Nome || novaGrade != inscricao.Grade.ToString();
         }
+
+
+        [HttpPost("{id}/inscricoes")]
+        public IActionResult Inscrever(long id, [FromBody]AlunoInscricaoDto dto)
+        {
+            var aluno = _alunoRepositorio.RecuperarPorId(id);
+
+            if (aluno == null)
+                return Error($"Nenhum aluno encontrado com o Id {id}");
+
+            var curso = _cursoRepositorio.RecuperarPorNome(dto.Curso);
+
+            if (curso == null)
+                return Error($"O curso é incorreto: {dto.Curso}.");
+
+            var gradeSucesso = Enum.TryParse(dto.Grade, out Grade grade);
+
+            if (!gradeSucesso)
+                return Error($"A grade é incorreta: {dto.Grade}.");
+
+            aluno.Inscrever(curso, grade);
+            _unitOfWork.Commit();
+
+            return Ok();
+        }
+        
     }
 }
