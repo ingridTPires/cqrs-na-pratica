@@ -237,11 +237,25 @@ namespace API.Controllers
             if (inscricao == null)
                 return Error($"Nenhuma inscrição encontrada com o número: {numeroInscricao}");
 
-            aluno.RemoverInscricao(inscricao);
-            aluno.AdicionarComentarioDeDesincricao(inscricao, dto.Comentario);
+            aluno.RemoverInscricao(inscricao, dto.Comentario);
 
             _unitOfWork.Commit();
 
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult EditarInformacoesPessoais(long id, [FromBody]AlunoInformacoesPessoaisDto dto)
+        {
+            var aluno = _alunoRepositorio.RecuperarPorId(id);
+
+            if (aluno == null)
+                return Error($"Nenhum aluno encontrado com o Id {id}");
+
+            aluno.Nome = dto.Nome;
+            aluno.Email = dto.Email;
+
+            _unitOfWork.Commit();
             return Ok();
         }
     }

@@ -36,9 +36,12 @@ namespace Logica.Alunos
             return null;
         }
 
-        public virtual void RemoverInscricao(Inscricao inscricao)
+        public virtual void RemoverInscricao(Inscricao inscricao, string comentario)
         {
             _inscricoes.Remove(inscricao);
+
+            var desincricao = new Desinscricao(inscricao.Aluno, inscricao.Curso, comentario);
+            _desincricoes.Add(desincricao);
         }
 
         public virtual void AdicionarComentarioDeDesincricao(Inscricao inscricao, string comment)
