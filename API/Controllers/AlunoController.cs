@@ -70,7 +70,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Excluir(long id)
+        public IActionResult Desregistrar(long id)
         {
             var aluno = _alunoRepositorio.RecuperarPorId(id);
 

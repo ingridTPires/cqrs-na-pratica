@@ -1,4 +1,5 @@
-﻿using CSharpFunctionalExtensions;
+﻿using API.Models;
+using CSharpFunctionalExtensions;
 using UI.API;
 using UI.Common;
 
