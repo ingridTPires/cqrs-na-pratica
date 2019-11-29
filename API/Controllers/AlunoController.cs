@@ -220,5 +220,29 @@ namespace API.Controllers
 
             return Ok();
         }
+
+        [HttpPost("{id}/inscricoes/{numeroInscricao}/excluir")]
+        public IActionResult Desinscricao(long id, int numeroInscricao, [FromBody]AlunoDesinscricaoDto dto)
+        {
+            var aluno = _alunoRepositorio.RecuperarPorId(id);
+
+            if (aluno == null)
+                return Error($"Nenhum aluno encontrado com o Id {id}");
+
+            if (string.IsNullOrEmpty(dto.Comentario))
+                return Error($"É necessario informar um comentário para desinscrever de um curso");
+
+            var inscricao = aluno.RecuperarInscricao(numeroInscricao);
+
+            if (inscricao == null)
+                return Error($"Nenhuma inscrição encontrada com o número: {numeroInscricao}");
+
+            aluno.RemoverInscricao(inscricao);
+            aluno.AdicionarComentarioDeDesincricao(inscricao, dto.Comentario);
+
+            _unitOfWork.Commit();
+
+            return Ok();
+        }
     }
 }
