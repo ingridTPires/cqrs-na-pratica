@@ -75,8 +75,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="API\ApiClient.cs" />
+    <Compile Include="API\AlunoDesinscricaoDto.cs" />
     <Compile Include="API\AlunoDto.cs" />
+    <Compile Include="API\AlunoInformacoesPessoaisDto.cs" />
+    <Compile Include="API\AlunoInscricaoDto.cs" />
+    <Compile Include="API\AlunoNovoDto.cs" />
+    <Compile Include="API\AlunoTransferenciaDto.cs" />
+    <Compile Include="API\ApiClient.cs" />
+    <Compile Include="API\Envelope.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
