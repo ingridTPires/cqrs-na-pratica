@@ -47,7 +47,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Criar([FromBody] AlunoDto dto)
+        public IActionResult Registrar([FromBody] AlunoNovoDto dto)
         {
             var aluno = new Aluno(dto.Nome, dto.Email);
 
