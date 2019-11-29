@@ -1,4 +1,4 @@
-﻿namespace Logica.Alunos
+﻿namespace API.Models
 {
     public sealed class AlunoInscricaoDto
     {
