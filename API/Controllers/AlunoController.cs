@@ -191,6 +191,34 @@ namespace API.Controllers
 
             return Ok();
         }
-        
+
+        [HttpPut("{id}/inscricoes/{numeroInscricao}")]
+        public IActionResult Transferir(long id, int numeroInscricao, [FromBody]AlunoTransferenciaDto dto)
+        {
+            var aluno = _alunoRepositorio.RecuperarPorId(id);
+
+            if (aluno == null)
+                return Error($"Nenhum aluno encontrado com o Id {id}");
+
+            var curso = _cursoRepositorio.RecuperarPorNome(dto.Curso);
+
+            if (curso == null)
+                return Error($"O curso é incorreto: {dto.Curso}.");
+
+            var gradeSucesso = Enum.TryParse(dto.Grade, out Grade grade);
+
+            if (!gradeSucesso)
+                return Error($"A grade é incorreta: {dto.Grade}.");
+
+            var inscricao = aluno.RecuperarInscricao(numeroInscricao);
+
+            if (inscricao == null)
+                return Error($"Nenhuma inscrição encontrada com o número: {numeroInscricao}");
+
+            inscricao.Atualizar(curso, grade);
+            _unitOfWork.Commit();
+
+            return Ok();
+        }
     }
 }

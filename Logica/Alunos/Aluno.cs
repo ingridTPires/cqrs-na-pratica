@@ -28,7 +28,7 @@ namespace Logica.Alunos
             Email = email;
         }
 
-        private Inscricao RecuperarInscricao(int index)
+        public virtual Inscricao RecuperarInscricao(int index)
         {
             if (_inscricoes.Count > index)
                 return _inscricoes[index];
