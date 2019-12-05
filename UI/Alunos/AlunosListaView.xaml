@@ -39,6 +39,8 @@
                                     <StackPanel Orientation="Horizontal">
                                         <Button Command="{Binding InscreverAlunoCommand}" CommandParameter="{Binding Path=Id}" Content="Inscrever" Margin="5" Padding="2" FontSize="16"
                                                 Visibility="{Binding Path=Curso1, Converter={StaticResource emptyStringToBoolConverter}, Mode=OneWay}" />
+                                        <Button Command="{Binding TransferirAlunoCommand}" CommandParameter="{Binding Path=Id}" Content="Transferir" Margin="5" Padding="2" FontSize="16"
+                                                Visibility="{Binding Path=Curso1, Converter={StaticResource invertedEmptyStringToBoolConverter}, Mode=OneWay}" />
                                     </StackPanel>
                                 </StackPanel>
                             </DataTemplate>
@@ -61,6 +63,8 @@
                                     <StackPanel Orientation="Horizontal">
                                         <Button Command="{Binding InscreverAlunoCommand}" CommandParameter="{Binding Path=Id}" Content="Inscrever" Margin="5" Padding="2" FontSize="16"
                                                 Visibility="{Binding Path=Curso2, Converter={StaticResource emptyStringToBoolConverter}, Mode=OneWay}" />
+                                        <Button Command="{Binding TransferirAlunoCommand}" CommandParameter="{Binding Path=Id}" Content="Transferir" Margin="5" Padding="2" FontSize="16"
+                                                Visibility="{Binding Path=Curso2, Converter={StaticResource invertedEmptyStringToBoolConverter}, Mode=OneWay}" />
                                     </StackPanel>
                                 </StackPanel>
                             </DataTemplate>

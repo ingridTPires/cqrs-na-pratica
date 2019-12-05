@@ -10,6 +10,7 @@
                 <ResourceDictionary Source="Alunos/EditarInformacoesPessoaisView.xaml" />
                 <ResourceDictionary Source="Alunos/RegistrarAlunoView.xaml" />
                 <ResourceDictionary Source="Alunos/InscreverAlunoView.xaml" />
+                <ResourceDictionary Source="Alunos/TransferirAlunoView.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

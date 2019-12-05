@@ -15,5 +15,7 @@ namespace API.Models
         public string Curso2Grade { get; set; }
         public int? Curso2Creditos { get; set; }
         public Command<long> InscreverAlunoCommand { get; set; }
+        public Command<long> TransferirAlunoCommand { get; set; }
     }
+
 }
