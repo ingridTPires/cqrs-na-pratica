@@ -14,7 +14,7 @@
 
             <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Left" Orientation="Horizontal">
                 <Button Command="{Binding CriarAlunoCommand}" Content="Adicionar" Margin="10 0 10 15" Padding="5" FontSize="18" />
-                <Button Command="{Binding AtualizarAlunoCommand}" CommandParameter="{Binding ElementName=grdAlunos, Path=SelectedValue}" Content="Atualizar" Margin="10 0 10 15" Padding="5" FontSize="18" />
+                <Button Command="{Binding EditarInformacoesPessoaisCommand}" CommandParameter="{Binding ElementName=grdAlunos, Path=SelectedValue}" Content="Editar informações pessoais" Margin="10 0 10 15" Padding="5" FontSize="18" />
                 <Button Command="{Binding ExcluirAlunoCommand}" CommandParameter="{Binding ElementName=grdAlunos, Path=SelectedValue}" Content="Excluir" Margin="10 0 10 15" Padding="5" FontSize="18" />
             </StackPanel>
 

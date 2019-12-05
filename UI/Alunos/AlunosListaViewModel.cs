@@ -14,16 +14,16 @@ namespace UI.Alunos
         public string NumeroDeCursosSelecionado { get; set; } = "";
 
         public Command PesquisarCommand { get; }
-        public Command CriarAlunoCommand { get; }
-        public Command<AlunoDto> AtualizarAlunoCommand { get; }
+        public Command RegistrarAlunoCommand { get; }
+        public Command<AlunoDto> EditarInformacoesPessoaisCommand { get; }
         public Command<AlunoDto> ExcluirAlunoCommand { get; }
         public IReadOnlyList<AlunoDto> Alunos { get; private set; }
 
         public AlunosListaViewModel()
         {
             PesquisarCommand = new Command(Pesquisar);
-            CriarAlunoCommand = new Command(CriarAluno);
-            AtualizarAlunoCommand = new Command<AlunoDto>(p => p != null, AtualizarAluno);
+            RegistrarAlunoCommand = new Command(RegistrarAluno);
+            EditarInformacoesPessoaisCommand = new Command<AlunoDto>(p => p != null, EditarInformacoesPessoais);
             ExcluirAlunoCommand = new Command<AlunoDto>(p => p != null, ExcluirAluno);
 
             Pesquisar();
@@ -31,22 +31,22 @@ namespace UI.Alunos
 
         private void ExcluirAluno(AlunoDto dto)
         {
-            ApiClient.Excluir(dto.Id).ConfigureAwait(false).GetAwaiter().GetResult();
+            //ApiClient.Excluir(dto.Id).ConfigureAwait(false).GetAwaiter().GetResult();
 
             Pesquisar();
         }
 
-        private void AtualizarAluno(AlunoDto dto)
+        private void EditarInformacoesPessoais(AlunoDto dto)
         {
-            var viewModel = new AlunoViewModel(dto);
+            var viewModel = new EditarInformacoesPessoaisViewModel(dto.Id, dto.Nome, dto.Email);
             _dialogService.ShowDialog(viewModel);
 
             Pesquisar();
         }
 
-        private void CriarAluno()
+        private void RegistrarAluno()
         {
-            var viewModel = new AlunoViewModel();
+            var viewModel = new RegistrarAlunoViewModel();
             _dialogService.ShowDialog(viewModel);
 
             Pesquisar();
