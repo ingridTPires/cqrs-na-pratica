@@ -11,6 +11,7 @@
                 <ResourceDictionary Source="Alunos/RegistrarAlunoView.xaml" />
                 <ResourceDictionary Source="Alunos/InscreverAlunoView.xaml" />
                 <ResourceDictionary Source="Alunos/TransferirAlunoView.xaml" />
+                <ResourceDictionary Source="Alunos/DesinscreverAlunoView.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

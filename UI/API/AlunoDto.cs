@@ -16,6 +16,9 @@ namespace API.Models
         public int? Curso2Creditos { get; set; }
         public Command<long> InscreverAlunoCommand { get; set; }
         public Command<long> TransferirAlunoCommand { get; set; }
+
+        public Command<long> DesinscreverAlunoCommand { get; set; }
+
     }
 
 }

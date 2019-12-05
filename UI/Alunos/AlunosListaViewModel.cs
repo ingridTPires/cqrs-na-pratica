@@ -19,6 +19,8 @@ namespace UI.Alunos
         public Command<AlunoDto> ExcluirAlunoCommand { get; }
         public Command<long> InscreverAlunoCommand { get; }
         public Command<long> TransferirAlunoCommand { get; set; }
+        public Command<long> DesinscreverAlunoCommand { get; set; }
+
         public IReadOnlyList<AlunoDto> Alunos { get; private set; }
 
         public AlunosListaViewModel()
@@ -29,6 +31,15 @@ namespace UI.Alunos
             ExcluirAlunoCommand = new Command<AlunoDto>(p => p != null, ExcluirAluno);
             InscreverAlunoCommand = new Command<long>(Inscrever);
             TransferirAlunoCommand = new Command<long>(Transferir);
+            DesinscreverAlunoCommand = new Command<long>(Desinscrever);
+
+            Pesquisar();
+        }
+
+        private void Desinscrever(long alunoId)
+        {
+            var viewModel = new DesinscreverAlunoViewModel(alunoId, 1);
+            _dialogService.ShowDialog(viewModel);
 
             Pesquisar();
         }
@@ -80,6 +91,7 @@ namespace UI.Alunos
             {
                 aluno.InscreverAlunoCommand = InscreverAlunoCommand;
                 aluno.TransferirAlunoCommand = TransferirAlunoCommand;
+                aluno.DesinscreverAlunoCommand = DesinscreverAlunoCommand;
             }
 
             Notify(nameof(Alunos));
