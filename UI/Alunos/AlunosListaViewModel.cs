@@ -17,6 +17,7 @@ namespace UI.Alunos
         public Command RegistrarAlunoCommand { get; }
         public Command<AlunoDto> EditarInformacoesPessoaisCommand { get; }
         public Command<AlunoDto> ExcluirAlunoCommand { get; }
+        public Command<long> InscreverAlunoCommand { get; }
         public IReadOnlyList<AlunoDto> Alunos { get; private set; }
 
         public AlunosListaViewModel()
@@ -25,6 +26,15 @@ namespace UI.Alunos
             RegistrarAlunoCommand = new Command(RegistrarAluno);
             EditarInformacoesPessoaisCommand = new Command<AlunoDto>(p => p != null, EditarInformacoesPessoais);
             ExcluirAlunoCommand = new Command<AlunoDto>(p => p != null, ExcluirAluno);
+            InscreverAlunoCommand = new Command<long>(Inscrever);
+
+            Pesquisar();
+        }
+
+        private void Inscrever(long alunoId)
+        {
+            var viewModel = new InscreverAlunoViewModel(alunoId);
+            _dialogService.ShowDialog(viewModel);
 
             Pesquisar();
         }
@@ -55,6 +65,11 @@ namespace UI.Alunos
         private void Pesquisar()
         {
             Alunos = ApiClient.RecuperarLista(CursoSelecionado, NumeroDeCursosSelecionado).ConfigureAwait(false).GetAwaiter().GetResult();
+
+            foreach (var aluno in Alunos)
+            {
+                aluno.InscreverAlunoCommand = InscreverAlunoCommand;
+            }
 
             Notify(nameof(Alunos));
         }
