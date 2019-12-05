@@ -30,6 +30,8 @@ namespace Logica.Alunos
 
         public virtual Inscricao RecuperarInscricao(int index)
         {
+            index--;
+
             if (_inscricoes.Count > index)
                 return _inscricoes[index];
 
