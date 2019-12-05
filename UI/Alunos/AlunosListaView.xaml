@@ -36,6 +36,10 @@
                                         <Label Content="Créditos:" Visibility="{Binding Path=Curso1, Converter={StaticResource invertedEmptyStringToBoolConverter}, Mode=OneWay}" />
                                         <Label Content="{Binding Path=Curso1Creditos}" />
                                     </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Command="{Binding InscreverAlunoCommand}" CommandParameter="{Binding Path=Id}" Content="Inscrever" Margin="5" Padding="2" FontSize="16"
+                                                Visibility="{Binding Path=Curso1, Converter={StaticResource emptyStringToBoolConverter}, Mode=OneWay}" />
+                                    </StackPanel>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
