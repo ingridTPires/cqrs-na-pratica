@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Alunos="clr-namespace:UI.Alunos">
-    <DataTemplate x:Key="AlunoView" DataType="Alunos:AlunoViewModel">
+                    xmlns:alunos="clr-namespace:UI.Alunos">
+    <DataTemplate x:Key="RegistrarAlunoView" DataType="alunos:RegistrarAlunoViewModel">
 
         <Grid>
             <Grid.RowDefinitions>
@@ -25,46 +25,28 @@
             <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Path=Aluno.Email, Mode=TwoWay}" Padding="5" Margin="10" FontSize="18" />
 
             <Label Grid.Column="0" Grid.Row="2" Content="Primeiro curso:" Margin="10" Padding="5" FontSize="18" />
-            <ComboBox Grid.Column="1" Grid.Row="2" x:Name="cbCursos1"
+            <ComboBox Grid.Column="1" Grid.Row="2" x:Name="cbCourses1"
                       ItemsSource="{Binding Path=Cursos}"
                       SelectedValue="{Binding Path=Aluno.Curso1}"
                       Padding="5" Margin="10" FontSize="18" />
 
-            <Label Grid.Column="0" Grid.Row="3" Content="Grade curso 1:" Margin="10" Padding="5" FontSize="18" 
-                   Visibility="{Binding ElementName=cbCursos1, Path=SelectedItem, Converter={StaticResource invertedEmptyStringToBoolConverter}, Mode=OneWay}" />
+            <Label Grid.Column="0" Grid.Row="3" Content="Primeiro curso grade:" Margin="10" Padding="5" FontSize="18" />
             <ComboBox Grid.Column="1" Grid.Row="3"
-                      Visibility="{Binding ElementName=cbCursos1, Path=SelectedItem, Converter={StaticResource invertedEmptyStringToBoolConverter}, Mode=OneWay}"
                       ItemsSource="{Binding Path=Grades}"
                       SelectedValue="{Binding Path=Aluno.Curso1Grade}"
                       Padding="5" Margin="10" FontSize="18" />
 
-            <Label Grid.Column="0" Grid.Row="3" Content="Comentário de desinscrição:" Margin="10" Padding="5" FontSize="18" 
-                   Visibility="{Binding ElementName=cbCursos1, Path=SelectedItem, Converter={StaticResource emptyStringToBoolConverter}, Mode=OneWay}" />
-            <TextBox Grid.Column="1" Grid.Row="3"
-                     Visibility="{Binding ElementName=cbCursos1, Path=SelectedItem, Converter={StaticResource emptyStringToBoolConverter}, Mode=OneWay}"
-                     Text="{Binding Path=Aluno.Curso1ComentarioDesincricao, Mode=TwoWay}"
-                     Padding="5" Margin="10" FontSize="18" />
-
             <Label Grid.Column="0" Grid.Row="4" Content="Segundo curso:" Margin="10" Padding="5" FontSize="18" />
-            <ComboBox Grid.Column="1" Grid.Row="4" x:Name="cbCursos2"
+            <ComboBox Grid.Column="1" Grid.Row="4" x:Name="cbCourses2"
                       ItemsSource="{Binding Path=Cursos}"
                       SelectedValue="{Binding Path=Aluno.Curso2}"
                       Padding="5" Margin="10" FontSize="18" />
 
-            <Label Grid.Column="0" Grid.Row="5" Content="Grade curso2:" Margin="10" Padding="5" FontSize="18" 
-                   Visibility="{Binding ElementName=cbCursos2, Path=SelectedItem, Converter={StaticResource invertedEmptyStringToBoolConverter}, Mode=OneWay}" />
+            <Label Grid.Column="0" Grid.Row="5" Content="Segundo curso grade:" Margin="10" Padding="5" FontSize="18" />
             <ComboBox Grid.Column="1" Grid.Row="5"
-                      Visibility="{Binding ElementName=cbCursos2, Path=SelectedItem, Converter={StaticResource invertedEmptyStringToBoolConverter}, Mode=OneWay}"
                       ItemsSource="{Binding Path=Grades}"
                       SelectedValue="{Binding Path=Aluno.Curso2Grade}"
                       Padding="5" Margin="10" FontSize="18" />
-
-            <Label Grid.Column="0" Grid.Row="5" Content="Comentário de desinscrição:" Margin="10" Padding="5" FontSize="18" 
-                   Visibility="{Binding ElementName=cbCursos2, Path=SelectedItem, Converter={StaticResource emptyStringToBoolConverter}, Mode=OneWay}" />
-            <TextBox Grid.Column="1" Grid.Row="5"
-                     Visibility="{Binding ElementName=cbCursos2, Path=SelectedItem, Converter={StaticResource emptyStringToBoolConverter}, Mode=OneWay}"
-                     Text="{Binding Path=Aluno.Curso2ComentarioDesincricao, Mode=TwoWay}"
-                     Padding="5" Margin="10" FontSize="18" />
 
             <Grid Grid.Column="1" Grid.Row="6" Margin="0 15 0 0">
                 <Grid.RowDefinitions>
@@ -76,7 +58,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Grid.Column="0" Grid.Row="0" Command="{Binding OkCommand}" Padding="5" Margin="10" FontSize="18" Content="OK" />
-                <Button Grid.Column="1" Grid.Row="0" Command="{Binding CancelarCommand}" Padding="5" Margin="10" FontSize="18" Content="Cancel" />
+                <Button Grid.Column="1" Grid.Row="0" Command="{Binding CancelarCommand}" Padding="5" Margin="10" FontSize="18" Content="Cancelar" />
             </Grid>
         </Grid>
 

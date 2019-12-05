@@ -7,7 +7,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Common/Common.xaml" />
                 <ResourceDictionary Source="Alunos/AlunosListaView.xaml" />
-                <ResourceDictionary Source="Alunos/AlunoView.xaml" />
+                <ResourceDictionary Source="Alunos/EditarInformacoesPessoaisView.xaml" />
+                <ResourceDictionary Source="Alunos/RegistrarAlunoView.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
