@@ -16,7 +16,6 @@ namespace UI.Alunos
         public Command PesquisarCommand { get; }
         public Command RegistrarAlunoCommand { get; }
         public Command<AlunoDto> EditarInformacoesPessoaisCommand { get; }
-        public Command<AlunoDto> ExcluirAlunoCommand { get; }
         public Command<long> InscreverAlunoCommand { get; }
         public Command<long> TransferirAlunoCommand { get; set; }
         public Command<long> DesinscreverAlunoCommand { get; set; }
@@ -28,7 +27,6 @@ namespace UI.Alunos
             PesquisarCommand = new Command(Pesquisar);
             RegistrarAlunoCommand = new Command(RegistrarAluno);
             EditarInformacoesPessoaisCommand = new Command<AlunoDto>(p => p != null, EditarInformacoesPessoais);
-            ExcluirAlunoCommand = new Command<AlunoDto>(p => p != null, ExcluirAluno);
             InscreverAlunoCommand = new Command<long>(Inscrever);
             TransferirAlunoCommand = new Command<long>(Transferir);
             DesinscreverAlunoCommand = new Command<long>(Desinscrever);

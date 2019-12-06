@@ -15,7 +15,7 @@
             <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Left" Orientation="Horizontal">
                 <Button Command="{Binding RegistrarAlunoCommand}" Content="Registrar" Margin="10 0 10 15" Padding="5" FontSize="18" />
                 <Button Command="{Binding EditarInformacoesPessoaisCommand}" CommandParameter="{Binding ElementName=grdAlunos, Path=SelectedValue}" Content="Editar informações pessoais" Margin="10 0 10 15" Padding="5" FontSize="18" />
-                <Button Command="{Binding ExcluirAlunoCommand}" CommandParameter="{Binding ElementName=grdAlunos, Path=SelectedValue}" Content="Excluir" Margin="10 0 10 15" Padding="5" FontSize="18" />
+                <Button Command="{Binding DesregistrarAlunoCommand}" CommandParameter="{Binding ElementName=grdAlunos, Path=SelectedValue}" Content="Desregistrar" Margin="10 0 10 15" Padding="5" FontSize="18" />
             </StackPanel>
 
             <DataGrid x:Name="grdAlunos" ItemsSource="{Binding Path=Alunos}" IsReadOnly="True" AutoGenerateColumns="False" SelectionMode="Single" FontSize="15">
