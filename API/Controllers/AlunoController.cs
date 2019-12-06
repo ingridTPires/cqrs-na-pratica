@@ -162,16 +162,12 @@ namespace API.Controllers
         [HttpPut("{id}")]
         public IActionResult EditarInformacoesPessoais(long id, [FromBody]AlunoInformacoesPessoaisDto dto)
         {
-            var aluno = _alunoRepositorio.RecuperarPorId(id);
+            var comando =new EditarInformacoesPessoaisCommand(id, dto.Nome, dto.Email);
+            var handler = new EditarInformacoesPessoaisHandler(_unitOfWork);
 
-            if (aluno == null)
-                return Error($"Nenhum aluno encontrado com o Id {id}");
+            var result = handler.Handle(comando);
 
-            aluno.Nome = dto.Nome;
-            aluno.Email = dto.Email;
-
-            _unitOfWork.Commit();
-            return Ok();
+            return result.IsSuccess ? Ok() : BadRequest(result.Error);
         }
     }
 }
