@@ -1,4 +1,5 @@
 ﻿using API.Utils;
+using Logica.Alunos;
 using Logica.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -20,7 +21,11 @@ namespace API
             services.AddMvc();
 
             services.AddSingleton(new SessionFactory(Configuration["ConnectionString"]));
-            services.AddScoped<UnitOfWork>();
+            services.AddTransient<UnitOfWork>();
+
+            services.AddTransient<ICommandHandler<EditarInformacoesPessoaisHandler>, EditarInformacoesPessoaisCommandHandler>();
+
+            services.AddSingleton<Messages>();
         }
 
         public void Configure(IApplicationBuilder app)

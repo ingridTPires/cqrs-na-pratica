@@ -12,12 +12,14 @@ namespace API.Controllers
     public sealed class AlunoController : BaseController
     {
         private readonly UnitOfWork _unitOfWork;
+        private readonly Messages _messages;
         private readonly AlunoRepositorio _alunoRepositorio;
         private readonly CursoRepositorio _cursoRepositorio;
 
-        public AlunoController(UnitOfWork unitOfWork)
+        public AlunoController(UnitOfWork unitOfWork, Messages messages)
         {
             _unitOfWork = unitOfWork;
+            _messages = messages;
             _alunoRepositorio = new AlunoRepositorio(unitOfWork);
             _cursoRepositorio = new CursoRepositorio(unitOfWork);
         }
@@ -25,27 +27,11 @@ namespace API.Controllers
         [HttpGet]
         public IActionResult GetLista(string cursoNome, int? numero)
         {
-            IReadOnlyList<Aluno> alunos = _alunoRepositorio.RecuperarLista(cursoNome, numero);
-            List<AlunoDto> dtos = alunos.Select(x => ConverterParaDto(x)).ToList();
-            return Ok(dtos);
+            var query = new RecuperarAlunosQuery(cursoNome, numero);
+            var result = _messages.Dispatch(query);
+            return Ok(result);
         }
-
-        private AlunoDto ConverterParaDto(Aluno aluno)
-        {
-            return new AlunoDto
-            {
-                Id = aluno.Id,
-                Nome = aluno.Nome,
-                Email = aluno.Email,
-                Curso1 = aluno.PrimeiraInscricao?.Curso?.Nome,
-                Curso1Grade = aluno.PrimeiraInscricao?.Grade.ToString(),
-                Curso1Creditos = aluno.PrimeiraInscricao?.Curso?.Creditos,
-                Curso2 = aluno.SegundaInscricao?.Curso?.Nome,
-                Curso2Grade = aluno.SegundaInscricao?.Grade.ToString(),
-                Curso2Creditos = aluno.SegundaInscricao?.Curso?.Creditos,
-            };
-        }
-
+        
         [HttpPost]
         public IActionResult Registrar([FromBody] AlunoNovoDto dto)
         {
@@ -137,7 +123,7 @@ namespace API.Controllers
         }
 
         [HttpPost("{id}/inscricoes/{numeroInscricao}/excluir")]
-        public IActionResult Desinscricao(long id, int numeroInscricao, [FromBody]AlunoDesinscricaoDto dto)
+        public IActionResult Desinscrever(long id, int numeroInscricao, [FromBody]AlunoDesinscricaoDto dto)
         {
             var aluno = _alunoRepositorio.RecuperarPorId(id);
 
@@ -162,10 +148,9 @@ namespace API.Controllers
         [HttpPut("{id}")]
         public IActionResult EditarInformacoesPessoais(long id, [FromBody]AlunoInformacoesPessoaisDto dto)
         {
-            var comando =new EditarInformacoesPessoaisCommand(id, dto.Nome, dto.Email);
-            var handler = new EditarInformacoesPessoaisHandler(_unitOfWork);
+            var comando =new EditarInformacoesPessoaisHandler(id, dto.Nome, dto.Email);
 
-            var result = handler.Handle(comando);
+            var result = _messages.Dispatch(comando);
 
             return result.IsSuccess ? Ok() : BadRequest(result.Error);
         }
