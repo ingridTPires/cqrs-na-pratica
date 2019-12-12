@@ -31,28 +31,15 @@ namespace API.Controllers
             var result = _messages.Dispatch(query);
             return Ok(result);
         }
-        
+
         [HttpPost]
         public IActionResult Registrar([FromBody] AlunoNovoDto dto)
         {
-            var aluno = new Aluno(dto.Nome, dto.Email);
+            var comando = new RegistrarAlunoCommand(dto.Nome, dto.Email, dto.Curso1, dto.Curso1Grade, dto.Curso2, dto.Curso2Grade);
 
-            if (dto.Curso1 != null && dto.Curso1Grade != null)
-            {
-                var curso = _cursoRepositorio.RecuperarPorNome(dto.Curso1);
-                aluno.Inscrever(curso, Enum.Parse<Grade>(dto.Curso1Grade));
-            }
+            var result = _messages.Dispatch(comando);
 
-            if (dto.Curso2 != null && dto.Curso2Grade != null)
-            {
-                var curso = _cursoRepositorio.RecuperarPorNome(dto.Curso2);
-                aluno.Inscrever(curso, Enum.Parse<Grade>(dto.Curso2Grade));
-            }
-
-            _alunoRepositorio.Salvar(aluno);
-            _unitOfWork.Commit();
-
-            return Ok();
+            return result.IsSuccess ? Ok() : BadRequest(result.Error);
         }
 
         [HttpDelete("{id}")]
@@ -148,7 +135,7 @@ namespace API.Controllers
         [HttpPut("{id}")]
         public IActionResult EditarInformacoesPessoais(long id, [FromBody]AlunoInformacoesPessoaisDto dto)
         {
-            var comando =new EditarInformacoesPessoaisHandler(id, dto.Nome, dto.Email);
+            var comando = new EditarInformacoesPessoaisCommand(id, dto.Nome, dto.Email);
 
             var result = _messages.Dispatch(comando);
 

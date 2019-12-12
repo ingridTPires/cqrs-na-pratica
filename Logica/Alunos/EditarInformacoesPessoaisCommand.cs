@@ -3,9 +3,9 @@ using Logica.Utils;
 
 namespace Logica.Alunos
 {
-    public sealed class EditarInformacoesPessoaisHandler : ICommand
+    public sealed class EditarInformacoesPessoaisCommand : ICommand
     {
-        public EditarInformacoesPessoaisHandler(long id, string nome, string email)
+        public EditarInformacoesPessoaisCommand(long id, string nome, string email)
         {
             Id = id;
             Nome = nome;
@@ -17,7 +17,7 @@ namespace Logica.Alunos
         public string Email { get; }
     }
 
-    public sealed class EditarInformacoesPessoaisCommandHandler : ICommandHandler<EditarInformacoesPessoaisHandler>
+    public sealed class EditarInformacoesPessoaisCommandHandler : ICommandHandler<EditarInformacoesPessoaisCommand>
     {
         private readonly UnitOfWork _unitOfWork;
 
@@ -25,7 +25,7 @@ namespace Logica.Alunos
         {
             _unitOfWork = unitOfWork;
         }
-        public Result Handle(EditarInformacoesPessoaisHandler command)
+        public Result Handle(EditarInformacoesPessoaisCommand command)
         {
             var alunoRepositorio = new AlunoRepositorio(_unitOfWork);
             var aluno = alunoRepositorio.RecuperarPorId(command.Id);

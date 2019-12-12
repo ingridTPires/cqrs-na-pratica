@@ -1,9 +1,11 @@
 ﻿using API.Utils;
 using Logica.Alunos;
+using Logica.Models;
 using Logica.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
 
 namespace API
 {
@@ -23,7 +25,9 @@ namespace API
             services.AddSingleton(new SessionFactory(Configuration["ConnectionString"]));
             services.AddTransient<UnitOfWork>();
 
-            services.AddTransient<ICommandHandler<EditarInformacoesPessoaisHandler>, EditarInformacoesPessoaisCommandHandler>();
+            services.AddTransient<ICommandHandler<EditarInformacoesPessoaisCommand>, EditarInformacoesPessoaisCommandHandler>();
+            services.AddTransient<ICommandHandler<RegistrarAlunoCommand>, RegistrarAlunoCommandHandler>();
+            services.AddTransient<IQueryHandler<RecuperarAlunosQuery, List<AlunoDto>>, RecuperarAlunosQueryHandler>();
 
             services.AddSingleton<Messages>();
         }
