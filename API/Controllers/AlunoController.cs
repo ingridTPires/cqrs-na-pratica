@@ -55,25 +55,11 @@ namespace API.Controllers
         [HttpPost("{id}/inscricoes")]
         public IActionResult Inscrever(long id, [FromBody]AlunoInscricaoDto dto)
         {
-            var aluno = _alunoRepositorio.RecuperarPorId(id);
+            var comando = new InscreverAlunoCommand(id, dto.Curso, dto.Grade);
 
-            if (aluno == null)
-                return Error($"Nenhum aluno encontrado com o Id {id}");
+            var result = _messages.Dispatch(comando);
 
-            var curso = _cursoRepositorio.RecuperarPorNome(dto.Curso);
-
-            if (curso == null)
-                return Error($"O curso é incorreto: {dto.Curso}.");
-
-            var gradeSucesso = Enum.TryParse(dto.Grade, out Grade grade);
-
-            if (!gradeSucesso)
-                return Error($"A grade é incorreta: {dto.Grade}.");
-
-            aluno.Inscrever(curso, grade);
-            _unitOfWork.Commit();
-
-            return Ok();
+            return result.IsSuccess ? Ok() : BadRequest(result.Error);
         }
 
         [HttpPut("{id}/inscricoes/{numeroInscricao}")]
