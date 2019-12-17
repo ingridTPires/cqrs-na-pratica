@@ -28,6 +28,7 @@ namespace API
             services.AddTransient<ICommandHandler<EditarInformacoesPessoaisCommand>, EditarInformacoesPessoaisCommandHandler>();
             services.AddTransient<ICommandHandler<RegistrarAlunoCommand>, RegistrarAlunoCommandHandler>();
             services.AddTransient<IQueryHandler<RecuperarAlunosQuery, List<AlunoDto>>, RecuperarAlunosQueryHandler>();
+            services.AddTransient<ICommandHandler<DesregistrarAlunoCommand>, DesregistrarAlunoCommandHandler>();
 
             services.AddSingleton<Messages>();
         }

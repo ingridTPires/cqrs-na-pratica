@@ -45,15 +45,11 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public IActionResult Desregistrar(long id)
         {
-            var aluno = _alunoRepositorio.RecuperarPorId(id);
+            var comando = new DesregistrarAlunoCommand(id);
 
-            if (aluno == null)
-                return Error($"Nenhum aluno encontrado com o Id {id}");
+            var result = _messages.Dispatch(comando);
 
-            _alunoRepositorio.Excluir(aluno);
-            _unitOfWork.Commit();
-
-            return Ok();
+            return result.IsSuccess ? Ok() : BadRequest(result.Error);
         }
 
         [HttpPost("{id}/inscricoes")]

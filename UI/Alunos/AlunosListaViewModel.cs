@@ -19,6 +19,8 @@ namespace UI.Alunos
         public Command<long> InscreverAlunoCommand { get; }
         public Command<long> TransferirAlunoCommand { get; set; }
         public Command<long> DesinscreverAlunoCommand { get; set; }
+        public Command<AlunoDto> DesregistrarAlunoCommand { get; set; }
+        
 
         public IReadOnlyList<AlunoDto> Alunos { get; private set; }
 
@@ -30,6 +32,14 @@ namespace UI.Alunos
             InscreverAlunoCommand = new Command<long>(Inscrever);
             TransferirAlunoCommand = new Command<long>(Transferir);
             DesinscreverAlunoCommand = new Command<long>(Desinscrever);
+            DesregistrarAlunoCommand = new Command<AlunoDto>(p => p != null, Desregistrar);
+
+            Pesquisar();
+        }
+
+        private void Desregistrar(AlunoDto dto)
+        {
+            ApiClient.Desregistrar(dto.Id).ConfigureAwait(false).GetAwaiter().GetResult();
 
             Pesquisar();
         }
@@ -54,13 +64,6 @@ namespace UI.Alunos
         {
             var viewModel = new InscreverAlunoViewModel(alunoId);
             _dialogService.ShowDialog(viewModel);
-
-            Pesquisar();
-        }
-
-        private void ExcluirAluno(AlunoDto dto)
-        {
-            //ApiClient.Excluir(dto.Id).ConfigureAwait(false).GetAwaiter().GetResult();
 
             Pesquisar();
         }
