@@ -30,6 +30,7 @@ namespace API
             services.AddTransient<IQueryHandler<RecuperarAlunosQuery, List<AlunoDto>>, RecuperarAlunosQueryHandler>();
             services.AddTransient<ICommandHandler<DesregistrarAlunoCommand>, DesregistrarAlunoCommandHandler>();
             services.AddTransient<ICommandHandler<InscreverAlunoCommand>, InscreverAlunoCommandHandler>();
+            services.AddTransient<ICommandHandler<TransferirAlunoCommand>, TransferirAlunoCommandHandler>();
 
             services.AddSingleton<Messages>();
         }
