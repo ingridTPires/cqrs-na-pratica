@@ -75,24 +75,11 @@ namespace API.Controllers
         [HttpPost("{id}/inscricoes/{numeroInscricao}/excluir")]
         public IActionResult Desinscrever(long id, int numeroInscricao, [FromBody]AlunoDesinscricaoDto dto)
         {
-            var aluno = _alunoRepositorio.RecuperarPorId(id);
+            var comando = new DesinscreverAlunoCommand(id, numeroInscricao, dto.Comentario);
 
-            if (aluno == null)
-                return Error($"Nenhum aluno encontrado com o Id {id}");
+            var result = _messages.Dispatch(comando);
 
-            if (string.IsNullOrEmpty(dto.Comentario))
-                return Error($"É necessario informar um comentário para desinscrever de um curso");
-
-            var inscricao = aluno.RecuperarInscricao(numeroInscricao);
-
-            if (inscricao == null)
-                return Error($"Nenhuma inscrição encontrada com o número: {numeroInscricao}");
-
-            aluno.RemoverInscricao(inscricao, dto.Comentario);
-
-            _unitOfWork.Commit();
-
-            return Ok();
+            return result.IsSuccess ? Ok() : BadRequest(result.Error);
         }
 
         [HttpPut("{id}")]

@@ -31,6 +31,7 @@ namespace API
             services.AddTransient<ICommandHandler<DesregistrarAlunoCommand>, DesregistrarAlunoCommandHandler>();
             services.AddTransient<ICommandHandler<InscreverAlunoCommand>, InscreverAlunoCommandHandler>();
             services.AddTransient<ICommandHandler<TransferirAlunoCommand>, TransferirAlunoCommandHandler>();
+            services.AddTransient<ICommandHandler<DesinscreverAlunoCommand>, DesinscreverAlunoCommandHandler>();
 
             services.AddSingleton<Messages>();
         }
