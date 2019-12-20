@@ -31,8 +31,9 @@ namespace API
             //services.AddTransient<ICommandHandler<EditarInformacoesPessoaisCommand>, EditarInformacoesPessoaisCommandHandler>();
             services.AddTransient<ICommandHandler<EditarInformacoesPessoaisCommand>>(provider =>
             {
-                return new DatabaseRetryDecorator<EditarInformacoesPessoaisCommand>(new EditarInformacoesPessoaisCommandHandler
-                    (provider.GetService<SessionFactory>()), provider.GetService<Config>());
+                return new AuditLoggingDecorator<EditarInformacoesPessoaisCommand>(new 
+                    DatabaseRetryDecorator<EditarInformacoesPessoaisCommand>(new EditarInformacoesPessoaisCommandHandler
+                    (provider.GetService<SessionFactory>()), provider.GetService<Config>()));
             });
 
             services.AddTransient<ICommandHandler<RegistrarAlunoCommand>, RegistrarAlunoCommandHandler>();

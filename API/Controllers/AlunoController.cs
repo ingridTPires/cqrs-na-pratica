@@ -8,17 +8,11 @@ namespace API.Controllers
     [Route("api/alunos")]
     public sealed class AlunoController : BaseController
     {
-        private readonly UnitOfWork _unitOfWork;
         private readonly Messages _messages;
-        private readonly AlunoRepositorio _alunoRepositorio;
-        private readonly CursoRepositorio _cursoRepositorio;
 
-        public AlunoController(UnitOfWork unitOfWork, Messages messages)
+        public AlunoController(Messages messages)
         {
-            _unitOfWork = unitOfWork;
             _messages = messages;
-            _alunoRepositorio = new AlunoRepositorio(unitOfWork);
-            _cursoRepositorio = new CursoRepositorio(unitOfWork);
         }
 
         [HttpGet]
