@@ -1,5 +1,6 @@
 ﻿using API.Utils;
 using Logica.Alunos;
+using Logica.Decorators;
 using Logica.Models;
 using Logica.Utils;
 using Microsoft.AspNetCore.Builder;
@@ -25,13 +26,24 @@ namespace API
             services.AddSingleton(new SessionFactory(Configuration["ConnectionString"]));
             services.AddTransient<UnitOfWork>();
 
-            services.AddTransient<ICommandHandler<EditarInformacoesPessoaisCommand>, EditarInformacoesPessoaisCommandHandler>();
+            var config = new Config(3);
+            services.AddSingleton(config);
+
+            //services.AddTransient<ICommandHandler<EditarInformacoesPessoaisCommand>, EditarInformacoesPessoaisCommandHandler>();
+            services.AddTransient<ICommandHandler<EditarInformacoesPessoaisCommand>>(provider =>
+            {
+                return new DatabaseRetryDecorator<EditarInformacoesPessoaisCommand>(new EditarInformacoesPessoaisCommandHandler
+                    (provider.GetService<SessionFactory>()), provider.GetService<Config>());
+            });
+
             services.AddTransient<ICommandHandler<RegistrarAlunoCommand>, RegistrarAlunoCommandHandler>();
-            services.AddTransient<IQueryHandler<RecuperarAlunosQuery, List<AlunoDto>>, RecuperarAlunosQueryHandler>();
             services.AddTransient<ICommandHandler<DesregistrarAlunoCommand>, DesregistrarAlunoCommandHandler>();
             services.AddTransient<ICommandHandler<InscreverAlunoCommand>, InscreverAlunoCommandHandler>();
             services.AddTransient<ICommandHandler<TransferirAlunoCommand>, TransferirAlunoCommandHandler>();
             services.AddTransient<ICommandHandler<DesinscreverAlunoCommand>, DesinscreverAlunoCommandHandler>();
+
+            services.AddTransient<IQueryHandler<RecuperarAlunosQuery, List<AlunoDto>>, RecuperarAlunosQueryHandler>();
+
 
             services.AddSingleton<Messages>();
         }
