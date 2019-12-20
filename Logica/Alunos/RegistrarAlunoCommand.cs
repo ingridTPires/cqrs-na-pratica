@@ -24,7 +24,7 @@ namespace Logica.Alunos
         public string Curso2Grade { get; set; }
 
     }
-
+    [DatabaseRetry]
     public sealed class RegistrarAlunoCommandHandler : ICommandHandler<RegistrarAlunoCommand>
     {
         private readonly SessionFactory _sessionFactory;

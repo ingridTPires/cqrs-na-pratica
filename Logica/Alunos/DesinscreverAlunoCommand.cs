@@ -16,7 +16,7 @@ namespace Logica.Alunos
         public int NumeroInscricao { get; set; }
         public string Comentario { get; set; }
     }
-
+    [DatabaseRetry]
     public sealed class DesinscreverAlunoCommandHandler : ICommandHandler<DesinscreverAlunoCommand>
     {
         private readonly SessionFactory _sessionFactory;

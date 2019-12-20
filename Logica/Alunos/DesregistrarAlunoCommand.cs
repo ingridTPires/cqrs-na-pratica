@@ -12,7 +12,7 @@ namespace Logica.Alunos
 
         public long Id { get; set; }
     }
-
+    [DatabaseRetry]
     public sealed class DesregistrarAlunoCommandHandler : ICommandHandler<DesregistrarAlunoCommand>
     {
         private readonly SessionFactory _sessionFactory;

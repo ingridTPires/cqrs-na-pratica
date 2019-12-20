@@ -1,12 +1,8 @@
 ﻿using API.Utils;
-using Logica.Alunos;
-using Logica.Decorators;
-using Logica.Models;
 using Logica.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Collections.Generic;
 
 namespace API
 {
@@ -27,7 +23,7 @@ namespace API
 
             var config = new Config(3);
             services.AddSingleton(config);
-            
+
             services.AddSingleton<Messages>();
 
             services.AddHandlers();

@@ -20,7 +20,7 @@ namespace Logica.Alunos
         public string Grade { get; set; }
 
     }
-
+    [DatabaseRetry]
     public sealed class InscreverAlunoCommandHandler : ICommandHandler<InscreverAlunoCommand>
     {
         private readonly SessionFactory _sessionFactory;

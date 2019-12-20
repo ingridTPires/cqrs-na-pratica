@@ -19,7 +19,7 @@ namespace Logica.Alunos
         public string Curso { get; set; }
         public string Grade { get; set; }
     }
-
+    [DatabaseRetry]
     public sealed class TransferirAlunoCommandHandler : ICommandHandler<TransferirAlunoCommand>
     {
         private readonly SessionFactory _sessionFactory;
