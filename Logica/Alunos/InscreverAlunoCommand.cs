@@ -23,16 +23,17 @@ namespace Logica.Alunos
 
     public sealed class InscreverAlunoCommandHandler : ICommandHandler<InscreverAlunoCommand>
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly SessionFactory _sessionFactory;
 
-        public InscreverAlunoCommandHandler(UnitOfWork unitOfWork)
+        public InscreverAlunoCommandHandler(SessionFactory sessionFactory)
         {
-            _unitOfWork = unitOfWork;
+            _sessionFactory = sessionFactory;
         }
         public Result Handle(InscreverAlunoCommand command)
         {
-            var alunoRepositorio = new AlunoRepositorio(_unitOfWork);
-            var cursoRepositorio = new CursoRepositorio(_unitOfWork);
+            var uow = new UnitOfWork(_sessionFactory);
+            var alunoRepositorio = new AlunoRepositorio(uow);
+            var cursoRepositorio = new CursoRepositorio(uow);
             var aluno = alunoRepositorio.RecuperarPorId(command.Id);
 
             if (aluno == null)
@@ -49,7 +50,7 @@ namespace Logica.Alunos
                 return Result.Fail($"A grade é incorreta: {command.Grade}.");
 
             aluno.Inscrever(curso, grade);
-            _unitOfWork.Commit();
+            uow.Commit();
 
             return Result.Ok();
         }

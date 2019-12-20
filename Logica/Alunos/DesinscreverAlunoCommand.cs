@@ -19,15 +19,16 @@ namespace Logica.Alunos
 
     public sealed class DesinscreverAlunoCommandHandler : ICommandHandler<DesinscreverAlunoCommand>
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly SessionFactory _sessionFactory;
 
-        public DesinscreverAlunoCommandHandler(UnitOfWork unitOfWork)
+        public DesinscreverAlunoCommandHandler(SessionFactory sessionFactory)
         {
-            _unitOfWork = unitOfWork;
+            _sessionFactory = sessionFactory;
         }
         public Result Handle(DesinscreverAlunoCommand command)
         {
-            var alunoRepositorio = new AlunoRepositorio(_unitOfWork);
+            var uow = new UnitOfWork(_sessionFactory);
+            var alunoRepositorio = new AlunoRepositorio(uow);
             var aluno = alunoRepositorio.RecuperarPorId(command.Id);
 
             if (aluno == null)
@@ -43,7 +44,7 @@ namespace Logica.Alunos
 
             aluno.RemoverInscricao(inscricao, command.Comentario);
 
-            _unitOfWork.Commit();
+            uow.Commit();
 
             return Result.Ok();
         }

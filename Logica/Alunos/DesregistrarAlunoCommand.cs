@@ -15,22 +15,23 @@ namespace Logica.Alunos
 
     public sealed class DesregistrarAlunoCommandHandler : ICommandHandler<DesregistrarAlunoCommand>
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly SessionFactory _sessionFactory;
 
-        public DesregistrarAlunoCommandHandler(UnitOfWork unitOfWork)
+        public DesregistrarAlunoCommandHandler(SessionFactory sessionFactory)
         {
-            _unitOfWork = unitOfWork;
+            _sessionFactory = sessionFactory;
         }
         public Result Handle(DesregistrarAlunoCommand command)
         {
-            var alunoRepositorio = new AlunoRepositorio(_unitOfWork);
+            var uow = new UnitOfWork(_sessionFactory);
+            var alunoRepositorio = new AlunoRepositorio(uow);
             var aluno = alunoRepositorio.RecuperarPorId(command.Id);
 
             if (aluno == null)
                 return Result.Fail($"Nenhum aluno encontrado com o Id {command.Id}");
 
             alunoRepositorio.Excluir(aluno);
-            _unitOfWork.Commit();
+            uow.Commit();
 
             return Result.Ok();
         }

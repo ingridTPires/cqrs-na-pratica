@@ -22,16 +22,17 @@ namespace Logica.Alunos
 
     public sealed class TransferirAlunoCommandHandler : ICommandHandler<TransferirAlunoCommand>
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly SessionFactory _sessionFactory;
 
-        public TransferirAlunoCommandHandler(UnitOfWork unitOfWork)
+        public TransferirAlunoCommandHandler(SessionFactory sessionFactory)
         {
-            _unitOfWork = unitOfWork;
+            _sessionFactory = sessionFactory;
         }
         public Result Handle(TransferirAlunoCommand command)
         {
-            var alunoRepositorio = new AlunoRepositorio(_unitOfWork);
-            var cursoRepositorio = new CursoRepositorio(_unitOfWork);
+            var uow = new UnitOfWork(_sessionFactory);
+            var alunoRepositorio = new AlunoRepositorio(uow);
+            var cursoRepositorio = new CursoRepositorio(uow);
             var aluno = alunoRepositorio.RecuperarPorId(command.Id);
 
             if (aluno == null)
@@ -53,7 +54,7 @@ namespace Logica.Alunos
                 return Result.Fail($"Nenhuma inscrição encontrada com o número: {command.NumeroInscricao}");
 
             inscricao.Atualizar(curso, grade);
-            _unitOfWork.Commit();
+            uow.Commit();
 
             return Result.Ok();
         }

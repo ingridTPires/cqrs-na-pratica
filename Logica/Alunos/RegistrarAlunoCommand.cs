@@ -27,17 +27,18 @@ namespace Logica.Alunos
 
     public sealed class RegistrarAlunoCommandHandler : ICommandHandler<RegistrarAlunoCommand>
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly SessionFactory _sessionFactory;
 
-        public RegistrarAlunoCommandHandler(UnitOfWork unitOfWork)
+        public RegistrarAlunoCommandHandler(SessionFactory sessionFactory)
         {
-            _unitOfWork = unitOfWork;
+            _sessionFactory = sessionFactory;
         }
 
         public Result Handle(RegistrarAlunoCommand command)
         {
-            var cursoRepositorio = new CursoRepositorio(_unitOfWork);
-            var alunoRepositorio = new AlunoRepositorio(_unitOfWork);
+            var uow = new UnitOfWork(_sessionFactory);
+            var cursoRepositorio = new CursoRepositorio(uow);
+            var alunoRepositorio = new AlunoRepositorio(uow);
             var aluno = new Aluno(command.Nome, command.Email);
 
             if (command.Curso1 != null && command.Curso1Grade != null)
@@ -53,7 +54,7 @@ namespace Logica.Alunos
             }
 
             alunoRepositorio.Salvar(aluno);
-            _unitOfWork.Commit();
+            uow.Commit();
 
             return Result.Ok();
         }
