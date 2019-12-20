@@ -1,1 +1,2 @@
 20/12/2019 - 10:41:31 - {"Id":2,"Nome":"Bob Marley","Email":"bob@outlook.com"}
+20/12/2019 - 11:30:47 - {"Id":3,"Nome":"Ingrid","Email":"email@email.com"}
