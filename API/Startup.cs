@@ -24,7 +24,6 @@ namespace API
             services.AddMvc();
 
             services.AddSingleton(new SessionFactory(Configuration["ConnectionString"]));
-            services.AddTransient<UnitOfWork>();
 
             var config = new Config(3);
             services.AddSingleton(config);
