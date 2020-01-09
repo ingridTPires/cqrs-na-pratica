@@ -19,7 +19,8 @@ namespace API
         {
             services.AddMvc();
 
-            services.AddSingleton(new SessionFactory(Configuration["ConnectionString"]));
+            services.AddSingleton(new ConnectionString(Configuration["ConnectionString"]));
+            services.AddSingleton<SessionFactory>();
 
             var config = new Config(3);
             services.AddSingleton(config);

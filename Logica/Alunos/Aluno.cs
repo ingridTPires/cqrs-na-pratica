@@ -11,8 +11,6 @@ namespace Logica.Alunos
 
         private readonly IList<Inscricao> _inscricoes = new List<Inscricao>();
         public virtual IReadOnlyList<Inscricao> Inscricoes => _inscricoes.ToList();
-        public virtual Inscricao PrimeiraInscricao => RecuperarInscricao(1);
-        public virtual Inscricao SegundaInscricao => RecuperarInscricao(2);
 
         private readonly IList<Desinscricao> _desincricoes = new List<Desinscricao>();
         public virtual IReadOnlyList<Desinscricao> Desincricoes => _desincricoes.ToList();

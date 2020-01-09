@@ -1,5 +1,4 @@
 ﻿using Logica.Utils;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Logica.Alunos
@@ -16,25 +15,6 @@ namespace Logica.Alunos
         public Aluno RecuperarPorId(long id)
         {
             return _unitOfWork.Get<Aluno>(id);
-        }
-
-        public IReadOnlyList<Aluno> RecuperarLista(string cursoNome, int? numeroDeCursos)
-        {
-            IQueryable<Aluno> query = _unitOfWork.Query<Aluno>();
-
-            if (!string.IsNullOrWhiteSpace(cursoNome))
-            {
-                query = query.Where(x => x.Inscricoes.Any(e => e.Curso.Nome == cursoNome));
-            }
-
-            List<Aluno> resultado = query.ToList();
-
-            if (numeroDeCursos != null)
-            {
-                resultado = resultado.Where(x => x.Inscricoes.Count == numeroDeCursos).ToList();
-            }
-
-            return resultado;
         }
 
         public void Salvar(Aluno aluno)
